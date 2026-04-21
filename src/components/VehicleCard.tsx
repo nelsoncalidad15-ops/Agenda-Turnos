@@ -84,7 +84,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
         </div>
 
         <div className="border-t border-slate-800/80 px-6 py-6 md:px-8">
-          <VehicleTimeline currentStatus={data.estado} />
+          <VehicleTimeline currentStatus={data.ultimoEstado || data.estado} />
         </div>
 
         <div className="grid gap-4 border-t border-slate-800/80 px-6 py-6 md:grid-cols-2 md:px-8">
