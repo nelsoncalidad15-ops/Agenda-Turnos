@@ -67,11 +67,11 @@ export function VehicleCard({ data }: VehicleCardProps) {
                 <p className="max-w-2xl text-sm leading-7 text-white/65 md:text-base">
                   Una vista oscura, elegante y operativa para consultar el estado de la unidad con foco absoluto.
                 </p>
-                <div className="flex flex-wrap gap-3 text-[10px] font-black uppercase tracking-[0.34em] text-white/45">
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">Interno {data.interno}</span>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">VIN {data.vin || 'No informado'}</span>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">Fecha {data.fecha || 'Pendiente'}</span>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">Hora {data.hora || '--:--'}</span>
+                <div className="grid gap-3 text-[10px] font-black uppercase tracking-[0.34em] text-white/45 sm:grid-cols-2 xl:grid-cols-4">
+                  <MetaPill label="Interno" value={data.interno} />
+                  <MetaPill label="VIN" value={data.vin || 'No informado'} />
+                  <MetaPill label="Fecha" value={data.fecha || 'Pendiente'} />
+                  <MetaPill label="Hora" value={data.hora || '--:--'} />
                 </div>
               </div>
             </div>
@@ -117,7 +117,8 @@ export function VehicleCard({ data }: VehicleCardProps) {
           <div className="mb-8 flex items-center justify-between">
             <div>
               <p className="text-[10px] font-black uppercase tracking-[0.34em] text-white/40">Cliente</p>
-              <h3 className="mt-2 text-3xl font-black tracking-[-0.05em]">{data.cliente}</h3>
+              <h3 className="mt-2 text-4xl font-black tracking-[-0.06em] text-white md:text-[2.75rem]">{data.cliente}</h3>
+              <p className="mt-2 text-sm leading-6 text-white/55">Contacto y trazabilidad de la unidad</p>
             </div>
             <div className="flex h-14 w-14 items-center justify-center rounded-[1.25rem] border border-white/10 bg-white/10 text-2xl font-black text-white">
               {data.cliente?.slice(0, 1) || 'A'}
@@ -197,6 +198,15 @@ function QuickLine({ label, value }: { label: string; value: string }) {
     <div className="flex items-center justify-between rounded-[1rem] border border-slate-700/80 bg-slate-900/90 px-4 py-3">
       <span className="text-[10px] font-black uppercase tracking-[0.34em] text-white/35">{label}</span>
       <span className="max-w-[60%] truncate text-sm font-black tracking-[-0.02em] text-white">{value}</span>
+    </div>
+  );
+}
+
+function MetaPill({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-[1rem] border border-white/10 bg-white/5 px-4 py-3">
+      <p className="text-[9px] font-black uppercase tracking-[0.34em] text-white/35">{label}</p>
+      <p className="mt-1 truncate text-sm font-black tracking-[-0.02em] text-white">{value}</p>
     </div>
   );
 }
