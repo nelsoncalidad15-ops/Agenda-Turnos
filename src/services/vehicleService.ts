@@ -15,6 +15,21 @@ function camelize(str: string): string {
     .replace(/\s+/g, '');
 }
 
+function normalizeStatus(status: unknown): VehicleData['estado'] {
+  if (typeof status !== 'string') return 'Pendiente';
+
+  const cleaned = status.trim().toLowerCase();
+
+  if (cleaned === 'facturado') return 'Facturado';
+  if (cleaned === 'turno' || cleaned === 'en turno') return 'Turno';
+  if (cleaned === 'preturno') return 'Preturno';
+  if (cleaned === 'patentado') return 'Patentado';
+  if (cleaned === 'entregado') return 'Entregado';
+  if (cleaned === 'en proceso' || cleaned === 'proceso') return 'En Proceso';
+
+  return 'Pendiente';
+}
+
 export const vehicleService = {
   async getAllVehicles(): Promise<VehicleData[]> {
     try {
@@ -40,17 +55,17 @@ export const vehicleService = {
           skipEmptyLines: true,
           transformHeader: (header) => camelize(header),
           complete: (results) => {
-            const data = (results.data as any[]).map((item) => {
-              const rawEstado = item.ultimoEstado || item.estado;
-              const cleanEstado = typeof rawEstado === 'string' && rawEstado.includes(' ')
-                ? rawEstado.split(' ').pop()
-                : rawEstado;
+            const data = (results.data as any[])
+              .map((item) => {
+                const rawEstado = item.ultimoEstado || item.estado;
 
-              return {
-                ...item,
-                estado: cleanEstado,
-              } as VehicleData;
-            }).filter((v) => v.interno && v.interno.length > 0);
+                return {
+                  ...item,
+                  ultimoEstado: rawEstado,
+                  estado: normalizeStatus(rawEstado),
+                } as VehicleData;
+              })
+              .filter((v) => v.interno && v.interno.length > 0);
 
             resolve(data);
           },
