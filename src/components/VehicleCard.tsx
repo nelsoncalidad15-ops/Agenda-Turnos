@@ -4,14 +4,10 @@ import {
   BadgeCheck,
   Calendar,
   Car,
-  Check,
-  Clock3,
-  Hash,
   Mail,
   MapPin,
   Phone,
   Printer,
-  ShieldCheck,
   Sparkles,
   User,
   Wrench,
@@ -71,20 +67,19 @@ export function VehicleCard({ data }: VehicleCardProps) {
                 <p className="max-w-2xl text-sm leading-7 text-white/65 md:text-base">
                   Una vista oscura, elegante y operativa para consultar el estado de la unidad con foco absoluto.
                 </p>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 xl:w-[260px]">
-                <MiniStat label="Interno" value={data.interno} icon={<Hash className="h-4 w-4" />} />
-                <MiniStat label="Estado" value={data.estado || 'Pendiente'} icon={<Sparkles className="h-4 w-4" />} accent />
-                <MiniStat label="Fecha" value={data.fecha || 'Pendiente'} icon={<Calendar className="h-4 w-4" />} />
-                <MiniStat label="Hora" value={data.hora || '--:--'} icon={<Clock3 className="h-4 w-4" />} />
+                <div className="flex flex-wrap gap-3 text-[10px] font-black uppercase tracking-[0.34em] text-white/45">
+                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">Interno {data.interno}</span>
+                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">VIN {data.vin || 'No informado'}</span>
+                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">Fecha {data.fecha || 'Pendiente'}</span>
+                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-2">Hora {data.hora || '--:--'}</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <div className="border-t border-slate-800/80 px-6 py-6 md:px-8">
-          <VehicleTimeline currentStatus={data.ultimoEstado || data.estado} />
+          <VehicleTimeline currentStatus={data.ultimoEstado || data.estado} statusText={data.ultimoEstado} />
         </div>
 
         <div className="grid gap-4 border-t border-slate-800/80 px-6 py-6 md:grid-cols-2 md:px-8">
@@ -108,12 +103,6 @@ export function VehicleCard({ data }: VehicleCardProps) {
             title="Gestion de turno"
             value={data.fechaGestionTurno || 'Pendiente de asignacion'}
             description="Fecha vinculada al proceso"
-          />
-          <InfoCard
-            icon={<ShieldCheck className="h-5 w-5 text-white" />}
-            title="Certificacion"
-            value={data.nOperacion || 'Sin numero de operacion'}
-            description="Identificador del registro"
           />
         </div>
       </motion.section>
@@ -146,10 +135,6 @@ export function VehicleCard({ data }: VehicleCardProps) {
               <span>Tipo de venta</span>
               <span className="text-white">{data.tipoDeVenta || 'Venta directa'}</span>
             </div>
-            <div className="flex items-center justify-between">
-              <span>Tipo de cliente</span>
-              <span className="text-white">{data.tipoDeCliente || 'Particular'}</span>
-            </div>
           </div>
         </motion.section>
 
@@ -161,8 +146,8 @@ export function VehicleCard({ data }: VehicleCardProps) {
         >
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-[10px] font-black uppercase tracking-[0.34em] text-white/40">Acceso rapido</p>
-              <h3 className="mt-2 text-xl font-black tracking-[-0.04em] text-white">Resumen operativo</h3>
+              <p className="text-[10px] font-black uppercase tracking-[0.34em] text-white/40">Resumen operativo</p>
+              <h3 className="mt-2 text-xl font-black tracking-[-0.04em] text-white">Datos de la unidad</h3>
             </div>
             <div className="flex h-12 w-12 items-center justify-center rounded-[1rem] bg-cyan-300/10 text-cyan-100">
               <Sparkles className="h-5 w-5" />
@@ -176,18 +161,6 @@ export function VehicleCard({ data }: VehicleCardProps) {
           </div>
         </motion.section>
       </div>
-    </div>
-  );
-}
-
-function MiniStat({ label, value, icon, accent }: { label: string; value: string; icon: ReactNode; accent?: boolean }) {
-  return (
-    <div className={`rounded-[1.35rem] border p-4 ${accent ? 'border-cyan-300/20 bg-cyan-300/10' : 'border-slate-700/80 bg-slate-900/90'}`}>
-      <div className="mb-3 flex items-center gap-2 text-white/45">
-        {icon}
-        <span className="text-[9px] font-black uppercase tracking-[0.34em]">{label}</span>
-      </div>
-      <p className="text-sm font-black tracking-[-0.03em] text-white">{value}</p>
     </div>
   );
 }
