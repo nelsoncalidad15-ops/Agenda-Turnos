@@ -22,7 +22,7 @@ function normalizeStatus(status: unknown): VehicleData['estado'] {
 
   if (cleaned === 'facturado') return 'Facturado';
   if (cleaned === 'turno' || cleaned === 'en turno') return 'Turno';
-  if (cleaned === 'preturno') return 'Preturno';
+  if (cleaned === 'preturno' || cleaned === 'pre turno') return 'Preturno';
   if (cleaned === 'patentado') return 'Patentado';
   if (cleaned === 'entregado') return 'Entregado';
   if (cleaned === 'en proceso' || cleaned === 'proceso') return 'En Proceso';
