@@ -1,0 +1,6 @@
+{
+  "name": "Agenda Turnos",
+  "description": "Sistema profesional de gestión de turnos y consulta de unidades por código interno. Preparado para Google Sheets hoy y base de datos después.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
