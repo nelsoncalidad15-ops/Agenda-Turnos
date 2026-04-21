@@ -36,7 +36,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
       <motion.section
         initial={{ opacity: 0, y: 18 }}
         animate={{ opacity: 1, y: 0 }}
-        className="overflow-hidden rounded-[2.5rem] border border-white/10 bg-white/5 shadow-[0_30px_90px_-30px_rgba(2,6,23,0.8)] backdrop-blur-2xl"
+        className="overflow-hidden rounded-[2.5rem] border border-slate-700/80 bg-slate-950/95 shadow-[0_30px_90px_-30px_rgba(2,6,23,0.95)] backdrop-blur-2xl"
       >
         <div className="relative overflow-hidden px-6 py-6 md:px-8 md:py-8">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(34,211,238,0.18),transparent_28%),linear-gradient(135deg,rgba(15,23,42,0.85),rgba(2,6,23,0.96))]" />
@@ -83,11 +83,11 @@ export function VehicleCard({ data }: VehicleCardProps) {
           </div>
         </div>
 
-        <div className="border-t border-white/10 px-6 py-6 md:px-8">
+        <div className="border-t border-slate-800/80 px-6 py-6 md:px-8">
           <VehicleTimeline currentStatus={data.estado} />
         </div>
 
-        <div className="grid gap-4 border-t border-white/10 px-6 py-6 md:grid-cols-2 md:px-8">
+        <div className="grid gap-4 border-t border-slate-800/80 px-6 py-6 md:grid-cols-2 md:px-8">
           <InfoCard
             icon={<MapPin className="h-5 w-5 text-cyan-300" />}
             title="Ubicacion operativa"
@@ -102,7 +102,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
           />
         </div>
 
-        <div className="grid gap-4 border-t border-white/10 px-6 py-6 md:grid-cols-2 md:px-8">
+        <div className="grid gap-4 border-t border-slate-800/80 px-6 py-6 md:grid-cols-2 md:px-8">
           <InfoCard
             icon={<Calendar className="h-5 w-5 text-amber-300" />}
             title="Gestion de turno"
@@ -123,7 +123,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05 }}
-          className="rounded-[2.5rem] border border-white/10 bg-white/5 p-7 text-white shadow-[0_30px_90px_-30px_rgba(2,6,23,0.85)] backdrop-blur-2xl"
+          className="rounded-[2.5rem] border border-slate-700/80 bg-slate-950/95 p-7 text-white shadow-[0_30px_90px_-30px_rgba(2,6,23,0.95)] backdrop-blur-2xl"
         >
           <div className="mb-8 flex items-center justify-between">
             <div>
@@ -157,7 +157,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.12 }}
-          className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_30px_90px_-30px_rgba(2,6,23,0.85)] backdrop-blur-2xl"
+          className="rounded-[2rem] border border-slate-700/80 bg-slate-950/95 p-6 shadow-[0_30px_90px_-30px_rgba(2,6,23,0.95)] backdrop-blur-2xl"
         >
           <div className="flex items-center justify-between">
             <div>
@@ -182,8 +182,8 @@ export function VehicleCard({ data }: VehicleCardProps) {
 
 function MiniStat({ label, value, icon, accent }: { label: string; value: string; icon: ReactNode; accent?: boolean }) {
   return (
-    <div className={`rounded-[1.35rem] border p-4 ${accent ? 'border-cyan-300/20 bg-cyan-300/10' : 'border-white/10 bg-white/5'}`}>
-      <div className="mb-3 flex items-center gap-2 text-white/40">
+    <div className={`rounded-[1.35rem] border p-4 ${accent ? 'border-cyan-300/20 bg-cyan-300/10' : 'border-slate-700/80 bg-slate-900/90'}`}>
+      <div className="mb-3 flex items-center gap-2 text-white/45">
         {icon}
         <span className="text-[9px] font-black uppercase tracking-[0.34em]">{label}</span>
       </div>
@@ -194,7 +194,7 @@ function MiniStat({ label, value, icon, accent }: { label: string; value: string
 
 function InfoCard({ icon, title, value, description }: { icon: ReactNode; title: string; value: string; description: string }) {
   return (
-    <div className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5 shadow-sm backdrop-blur-xl">
+    <div className="rounded-[1.75rem] border border-slate-700/80 bg-slate-900/90 p-5 shadow-sm backdrop-blur-xl">
       <div className="mb-4 flex items-center justify-between">
         <div>
           <p className="text-[10px] font-black uppercase tracking-[0.34em] text-white/40">{title}</p>
@@ -209,7 +209,7 @@ function InfoCard({ icon, title, value, description }: { icon: ReactNode; title:
 
 function ContactRow({ icon, label, value }: { icon: ReactNode; label: string; value: string }) {
   return (
-    <div className="flex items-start gap-4 rounded-[1.25rem] border border-white/10 bg-white/5 p-4">
+    <div className="flex items-start gap-4 rounded-[1.25rem] border border-slate-700/80 bg-slate-900/85 p-4">
       <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/10 text-white/80">{icon}</div>
       <div>
         <p className="text-[9px] font-black uppercase tracking-[0.34em] text-white/35">{label}</p>
@@ -221,7 +221,7 @@ function ContactRow({ icon, label, value }: { icon: ReactNode; label: string; va
 
 function QuickLine({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between rounded-[1rem] border border-white/10 bg-black/20 px-4 py-3">
+    <div className="flex items-center justify-between rounded-[1rem] border border-slate-700/80 bg-slate-900/90 px-4 py-3">
       <span className="text-[10px] font-black uppercase tracking-[0.34em] text-white/35">{label}</span>
       <span className="max-w-[60%] truncate text-sm font-black tracking-[-0.02em] text-white">{value}</span>
     </div>
