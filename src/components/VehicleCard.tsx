@@ -7,7 +7,6 @@ import {
   Info,
   Check,
   Shield,
-  Palette,
   QrCode,
   Smartphone,
   Sparkles,
@@ -59,8 +58,8 @@ export function VehicleCard({ data }: VehicleCardProps) {
         />
         <div className="absolute bottom-0 left-0 w-24 h-1 bg-blue-600/40" />
 
-        <div className="relative z-10 flex flex-col xl:flex-row justify-between items-start xl:items-end gap-8 md:gap-12">
-          <div className="space-y-6 md:space-y-8">
+        <div className="relative z-10 grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_380px] gap-8 md:gap-12 items-start xl:items-end">
+          <div className="min-w-0 space-y-6 md:space-y-8">
             <div className="flex items-center gap-6">
               <Badge label="Unidad Certificada" />
               <div className="flex items-center gap-2">
@@ -91,23 +90,18 @@ export function VehicleCard({ data }: VehicleCardProps) {
               <QuickHeroStat label="Ubicacion" value={locationValue} />
             </div>
 
-            <div className="flex flex-wrap gap-8 md:gap-12 pt-2">
-              <HeroStat
-                label="Color Exterior"
-                value={data.color || 'N/A'}
-                icon={<Palette className="w-4 h-4 md:w-5 md:h-5" />}
-              />
-              {shouldShowDate && (
+            {shouldShowDate && (
+              <div className="flex flex-wrap gap-8 md:gap-12 pt-2">
                 <HeroStat
                   label="Agenda Entrega"
                   value={`${data.fecha} - ${data.hora || '--'} HS`}
                   icon={<Calendar className="w-4 h-4 md:w-5 md:h-5" />}
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
 
-          <div className="w-full xl:w-[450px] space-y-8 md:space-y-10 bg-white/5 p-6 md:p-8 rounded-[2rem] md:rounded-[3rem] border border-white/5 backdrop-blur-sm">
+          <div className="w-full max-w-full xl:max-w-[380px] xl:justify-self-end space-y-8 md:space-y-10 bg-white/5 p-6 md:p-8 rounded-[2rem] md:rounded-[3rem] border border-white/5 backdrop-blur-sm">
             <div className="flex justify-between items-end">
               <div className="space-y-2">
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Ultimo Estado</span>
@@ -257,12 +251,9 @@ export function VehicleCard({ data }: VehicleCardProps) {
             </div>
           </div>
 
-          <div className="mt-8 grid grid-cols-2 gap-4">
-            <MiniStat label="Color" value={data.color || 'No informado'} />
-            <MiniStat label="Fecha de Pago" value={data.fechaPago || 'No informada'} />
+          <div className="mt-8 grid grid-cols-1 gap-4">
             <MiniStat label="Fecha de Facturacion" value={data.fechaFacturacion || 'No informada'} />
-            <MiniStat label="Entrega Usado" value={data.entregaUsado || 'No declarada'} />
-            <MiniStat label="Accesorios" value={data.cargoAccesorios || 'Sin cargo adicional'} />
+            <MiniStat label="Fecha de Pago" value={data.fechaPago || 'No informada'} />
           </div>
         </div>
       </div>
