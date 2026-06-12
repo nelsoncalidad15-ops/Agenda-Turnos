@@ -136,30 +136,6 @@ export function VehicleCard({ data }: VehicleCardProps) {
 
       <div className="col-span-12 xl:col-span-8 space-y-4 md:space-y-6">
         <div className="glass-panel p-6 md:p-10 rounded-[2rem] md:rounded-[3.5rem]">
-          <div className="flex justify-between items-start gap-6 mb-8 md:mb-10">
-            <div className="space-y-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Proxima Gestion</span>
-              <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight">Resumen de Coordinacion</h3>
-              <p className="text-sm md:text-base text-slate-400 font-medium">
-                Todo lo clave para confirmar turno, contacto y estado sin ir a los datos tecnicos.
-              </p>
-            </div>
-            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center shrink-0">
-              <Calendar className="w-6 h-6 md:w-7 md:h-7 text-blue-500" />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <MiniStat label="Telefono" value={data.telefono || 'No disponible'} />
-            <MiniStat label="Email" value={data.mail || 'No disponible'} />
-            <MiniStat label="Tipo de Cliente" value={customerTypeValue} />
-            <MiniStat label="Tipo de Venta" value={data.tipoDeVenta || 'No definida'} />
-            <MiniStat label="Dominio" value={data.dominio || 'Sin dominio'} />
-            <MiniStat label="Interno" value={data.interno} />
-          </div>
-        </div>
-
-        <div className="glass-panel p-6 md:p-10 rounded-[2rem] md:rounded-[3.5rem]">
           <div className="flex justify-between items-center mb-10 md:mb-14 px-4">
             <div>
               <h3 className="text-xl md:text-2xl font-black text-white tracking-tight">Timeline Estrategico</h3>
@@ -181,6 +157,30 @@ export function VehicleCard({ data }: VehicleCardProps) {
                 index={i + 1}
               />
             ))}
+          </div>
+        </div>
+
+        <div className="glass-panel p-6 md:p-10 rounded-[2rem] md:rounded-[3.5rem]">
+          <div className="flex justify-between items-start gap-6 mb-8 md:mb-10">
+            <div className="space-y-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Proxima Gestion</span>
+              <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight">Resumen de Coordinacion</h3>
+              <p className="text-sm md:text-base text-slate-400 font-medium">
+                Todo lo clave para confirmar turno, contacto y estado sin ir a los datos tecnicos.
+              </p>
+            </div>
+            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center shrink-0">
+              <Calendar className="w-6 h-6 md:w-7 md:h-7 text-blue-500" />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <MiniStat label="Telefono" value={data.telefono || 'No disponible'} />
+            <MiniStat label="Email" value={data.mail || 'No disponible'} />
+            <MiniStat label="Tipo de Cliente" value={customerTypeValue} />
+            <MiniStat label="Tipo de Venta" value={data.tipoDeVenta || 'No definida'} />
+            <MiniStat label="Dominio" value={data.dominio || 'Sin dominio'} />
+            <MiniStat label="Interno" value={data.interno} />
           </div>
         </div>
 
