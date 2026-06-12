@@ -177,6 +177,8 @@ export function VehicleCard({ data }: VehicleCardProps) {
               label={shouldShowDate ? 'Entrega' : 'Agenda'}
               value={shouldShowDate ? `${data.fecha || '--'}${data.hora ? ` - ${data.hora}` : ''}` : 'Pendiente'}
             />
+            <MiniStat label="Fecha de Pago" value={data.fechaPago || 'No informada'} />
+            <MiniStat label="Fecha de Facturacion" value={data.fechaFacturacion || 'No informada'} />
           </div>
         </div>
 
