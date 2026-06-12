@@ -3,6 +3,7 @@ export type VehicleStatus = 'Preturno' | 'Facturado' | 'Patentado' | 'Turno' | '
 export interface VehicleData {
   interno: string;
   estado: VehicleStatus;
+  preentAcc?: string;
   tipo?: string;
   fecha?: string;
   hora?: string;

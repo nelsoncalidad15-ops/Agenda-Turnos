@@ -5,6 +5,17 @@ import Papa from 'papaparse';
 
 const PUBLIC_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTbatvNVQXfFIWq5wGpd0wrTp1qW22uIiPjJLcNI-VLdl3FlHneGwyAknlu6JbBgprFJq2SlhwT2fTP/pub?gid=0&single=true&output=csv';
 
+const STATUS_ALIASES: Record<string, VehicleData['estado']> = {
+  facturado: 'Facturado',
+  preturno: 'Preturno',
+  patentado: 'Patentado',
+  turno: 'Turno',
+  pendiente: 'Pendiente',
+  enproceso: 'En Proceso',
+  proceso: 'En Proceso',
+  entregado: 'Entregado',
+};
+
 function camelize(str: string): string {
   if (!str) return '';
   return str
@@ -15,6 +26,31 @@ function camelize(str: string): string {
       return index === 0 ? word.toLowerCase() : word.toUpperCase();
     })
     .replace(/\s+/g, '');
+}
+
+function normalizeStatus(rawStatus: unknown): VehicleData['estado'] {
+  if (typeof rawStatus !== 'string' || !rawStatus.trim()) {
+    return 'Pendiente';
+  }
+
+  const compactValue = rawStatus
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+
+  const parts = compactValue
+    .split(/[^a-z0-9]+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  for (const part of parts) {
+    const normalized = STATUS_ALIASES[part];
+    if (normalized) return normalized;
+  }
+
+  const collapsed = parts.join('');
+  return STATUS_ALIASES[collapsed] || 'Pendiente';
 }
 
 export const vehicleService = {
@@ -43,15 +79,10 @@ export const vehicleService = {
           transformHeader: (header) => camelize(header),
           complete: (results) => {
             const data = (results.data as any[]).map(item => {
-              // Priority for Ultimo Estado logic
-              const rawEstado = item.ultimoEstado || item.estado;
-              const cleanEstado = typeof rawEstado === 'string' && rawEstado.includes(' ') 
-                ? rawEstado.split(' ').pop() 
-                : rawEstado;
-              
               return {
                 ...item,
-                estado: cleanEstado
+                preentAcc: item.preentAcc || '',
+                estado: normalizeStatus(item.ultimoEstado || item.estado),
               } as VehicleData;
             }).filter(v => v.interno && v.interno.length > 0);
 

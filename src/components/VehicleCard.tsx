@@ -18,7 +18,7 @@ interface VehicleCardProps {
   data: VehicleData;
 }
 
-const STAGES = ['Facturado', 'Patentado', 'Turno'];
+const STAGES = ['Facturado', 'Preturno', 'Patentado', 'Turno'];
 
 export function VehicleCard({ data }: VehicleCardProps) {
   const currentStageIndex = STAGES.indexOf(data.estado as string);
