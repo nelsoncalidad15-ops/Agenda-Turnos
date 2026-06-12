@@ -7,7 +7,6 @@ import {
   Info,
   Check,
   Shield,
-  Zap,
   Palette,
   QrCode,
   Smartphone,
@@ -86,10 +85,10 @@ export function VehicleCard({ data }: VehicleCardProps) {
             </h2>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
-              <QuickHeroStat label="Estado" value={data.estado} />
               <QuickHeroStat label="Fecha" value={agendaDateValue} />
               <QuickHeroStat label="Hora" value={agendaHourValue} />
               <QuickHeroStat label="Vendedor" value={advisorValue} />
+              <QuickHeroStat label="Ubicacion" value={locationValue} />
             </div>
 
             <div className="flex flex-wrap gap-8 md:gap-12 pt-2">
@@ -97,11 +96,6 @@ export function VehicleCard({ data }: VehicleCardProps) {
                 label="Color Exterior"
                 value={data.color || 'N/A'}
                 icon={<Palette className="w-4 h-4 md:w-5 md:h-5" />}
-              />
-              <HeroStat
-                label="Operacion"
-                value={data.tipoDeVenta}
-                icon={<Zap className="w-4 h-4 md:w-5 md:h-5" />}
               />
               {shouldShowDate && (
                 <HeroStat
@@ -156,12 +150,12 @@ export function VehicleCard({ data }: VehicleCardProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <MiniStat label="Ubicacion" value={locationValue} />
             <MiniStat label="Telefono" value={data.telefono || 'No disponible'} />
             <MiniStat label="Email" value={data.mail || 'No disponible'} />
             <MiniStat label="Tipo de Cliente" value={customerTypeValue} />
             <MiniStat label="Tipo de Venta" value={data.tipoDeVenta || 'No definida'} />
             <MiniStat label="Dominio" value={data.dominio || 'Sin dominio'} />
+            <MiniStat label="Interno" value={data.interno} />
           </div>
         </div>
 
@@ -249,19 +243,14 @@ export function VehicleCard({ data }: VehicleCardProps) {
                 value={data.mail || 'No disponible'}
               />
             </div>
-
-            <div className="grid grid-cols-1 gap-3 pt-2">
-              <MiniStat label="Tipo de Cliente" value={customerTypeValue} />
-              <MiniStat label="Vendedor" value={advisorValue} />
-            </div>
           </div>
         </motion.div>
 
         <div className="glass-panel p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-white/5">
           <div className="flex items-start justify-between gap-6">
             <div className="space-y-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Unidad y Gestion</span>
-              <p className="text-2xl md:text-3xl font-black text-white tracking-tight">{data.estado}</p>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Administracion</span>
+              <p className="text-2xl md:text-3xl font-black text-white tracking-tight">Fechas Clave</p>
             </div>
             <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center">
               <Shield className="w-6 h-6 md:w-7 md:h-7 text-blue-500" />
@@ -269,12 +258,11 @@ export function VehicleCard({ data }: VehicleCardProps) {
           </div>
 
           <div className="mt-8 grid grid-cols-2 gap-4">
-            <MiniStat label="Interno" value={data.interno} />
-            <MiniStat label="Dominio" value={data.dominio || 'Sin dominio'} />
             <MiniStat label="Color" value={data.color || 'No informado'} />
-            <MiniStat label="Ubicacion" value={locationValue} />
             <MiniStat label="Fecha de Pago" value={data.fechaPago || 'No informada'} />
             <MiniStat label="Fecha de Facturacion" value={data.fechaFacturacion || 'No informada'} />
+            <MiniStat label="Entrega Usado" value={data.entregaUsado || 'No declarada'} />
+            <MiniStat label="Accesorios" value={data.cargoAccesorios || 'Sin cargo adicional'} />
           </div>
         </div>
       </div>
