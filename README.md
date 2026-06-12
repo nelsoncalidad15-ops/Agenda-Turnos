@@ -1,48 +1,38 @@
 # TrackDrive - Consulta de Internos
 
-Proyecto web profesional para seguimiento de estado de unidades.
+Proyecto web para seguimiento de estado de unidades con frontend React y backend Node/Express.
 
-## Tecnologías
-- **Frontend**: React 19 + Vite + Tailwind CSS 4
-- **Animaciones**: Framer Motion
-- **Iconografía**: Lucide React
-- **Backend**: Google Apps Script (actual) / Preparado para SQL (futuro)
+## Arquitectura actual
+- Frontend: React 19 + Vite
+- Backend: Express
+- Fuente de datos: Google Sheets CSV consumido solo desde el servidor
+- Deploy sugerido: un unico servicio en Render
 
-## Configuración Local
-1. Instala dependencias: `npm install`
-2. Crea un archivo `.env` basado en `.env.example`
-3. Agrega `VITE_API_URL="TU_URL_DE_APPS_SCRIPT"`
-4. Ejecuta: `npm run dev`
+## Por que este cambio protege mejor la hoja
+Antes el navegador pegaba directo a Google Sheets, asi que la URL quedaba expuesta.
+Ahora el navegador solo habla con `/api/vehicles` y la URL real del Sheet vive en la variable privada `SHEET_CSV_URL` del backend.
 
-## Publicación en GitHub Pages
-1. Asegúrate de que `vite.config.ts` tenga la propiedad `base: './'` o similar.
-2. Ejecuta `npm run build`.
-3. Sube el contenido de `dist/` a la rama `gh-pages` o configura GitHub Actions.
+Importante: esto oculta la URL y evita exponerla en el cliente, pero si la hoja sigue publicada como CSV publico, la hoja sigue siendo publica para cualquiera que tenga esa URL. Para una proteccion completa, el siguiente paso es migrar a una hoja privada con credenciales de servicio o a una base de datos.
 
-## Configuración para GitHub Pages (Vite)
-En `vite.config.ts`:
-```typescript
-export default defineConfig({
-  base: '/nombre-de-tu-repo/',
-  // ... resto de la config
-})
-```
+## Configuracion local
+1. Instala dependencias con `npm install`
+2. Crea `.env` a partir de `.env.example`
+3. Define `SHEET_CSV_URL` con la URL CSV real de tu Google Sheet
+4. En una terminal ejecuta `npm run dev:server`
+5. En otra terminal ejecuta `npm run dev`
 
-## Migración a Supabase / Postgres (Futuro)
-Para migrar el sistema a una base de datos real:
-1. Crea tu tabla `vehiculos` en Supabase con las columnas definidas en `src/types/vehicle.ts`.
-2. Actualiza `src/services/vehicleService.ts`.
-3. Cambia la implementación de `getByInterno` para usar el cliente de Supabase:
-   ```typescript
-   import { supabase } from '../lib/supabase';
-   
-   const { data, error } = await supabase
-     .from('vehiculos')
-     .select('*')
-     .eq('interno', interno)
-     .single();
-   ```
-4. No necesitas cambiar nada en la UI (Componentes), ya que la lógica está desacoplada.
+Vite hace proxy de `/api` a `http://localhost:3001`, asi que no necesitas exponer `VITE_API_URL` en desarrollo local.
 
-## Modo Demo
-Si no configuras `VITE_API_URL`, la aplicación funcionará en **Modo Demo** usando datos precargados para los internos `46546` y `12345`.
+## Endpoints del backend
+- `GET /health`
+- `GET /api/vehicles`
+- `GET /api/vehicles/:interno`
+
+## Deploy en Render
+1. Sube este repo a GitHub
+2. En Render crea un nuevo `Web Service`
+3. Render detectara `render.yaml`
+4. Configura la variable privada `SHEET_CSV_URL`
+5. Despliega
+
+El backend sirve el `dist/` del frontend y tambien responde la API desde el mismo dominio.

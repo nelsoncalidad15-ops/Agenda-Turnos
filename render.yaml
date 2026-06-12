@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: gestion-turnos
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: SHEET_CSV_URL
+        sync: false
+      - key: SHEET_CACHE_TTL_MS
+        value: "60000"
