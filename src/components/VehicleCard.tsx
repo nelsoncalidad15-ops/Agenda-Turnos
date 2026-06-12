@@ -1,24 +1,17 @@
 import React from 'react';
 import { 
   User, 
-  MapPin, 
   Calendar, 
   Mail, 
   Truck,
   Info,
-  Clock,
   Check,
-  FileText,
   Shield,
-  Printer,
-  ChevronRight,
   Zap,
-  CreditCard,
-  Hash,
   Palette,
   QrCode,
   Smartphone,
-  Navigation
+  Sparkles
 } from 'lucide-react';
 import { VehicleData } from '../types/vehicle';
 import { motion } from 'motion/react';
@@ -31,14 +24,14 @@ const STAGES = ['Facturado', 'Patentado', 'Turno'];
 
 export function VehicleCard({ data }: VehicleCardProps) {
   const currentStageIndex = STAGES.indexOf(data.estado as string);
+  const accessoryValue = data.accesorios || data.cargoAccesorios || 'Sin accesorios informados';
+  const accessorySub = data.accesorios && data.cargoAccesorios
+    ? `Cargo adicional: ${data.cargoAccesorios}`
+    : 'Equipamiento adicional registrado para la unidad';
   
   const getProgressPercentage = () => {
     if (currentStageIndex === -1) return 25;
     return Math.max(25, ((currentStageIndex + 1) / STAGES.length) * 100);
-  };
-
-  const handlePrint = () => {
-    window.print();
   };
 
   const shouldShowDate = data.estado === 'Turno';
@@ -137,7 +130,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
            <InfoPanel 
              icon={<User className="w-6 h-6 md:w-7 md:h-7 text-blue-500" />}
              title="Consultoría de Venta"
@@ -152,11 +145,40 @@ export function VehicleCard({ data }: VehicleCardProps) {
              value={data.entregaUsado || 'No declarada'}
              sub="Información sujeta a verificación de peritaje"
            />
+           <InfoPanel 
+             icon={<Sparkles className="w-6 h-6 md:w-7 md:h-7 text-amber-400" />}
+             title="Accesorios"
+             label="Equipamiento"
+             value={accessoryValue}
+             sub={accessorySub}
+           />
         </div>
       </div>
 
       {/* RIGHT: OWNER & AGENT DETAILS */}
       <div className="col-span-12 xl:col-span-4 space-y-4 md:space-y-6">
+        <div className="glass-panel p-8 md:p-10 rounded-[2.5rem] md:rounded-[3rem] border border-white/5">
+          <div className="flex items-start justify-between gap-6">
+            <div className="space-y-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Resumen de Gestion</span>
+              <p className="text-2xl md:text-3xl font-black text-white tracking-tight">{data.estado}</p>
+            </div>
+            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center">
+              <Shield className="w-6 h-6 md:w-7 md:h-7 text-blue-500" />
+            </div>
+          </div>
+
+          <div className="mt-8 grid grid-cols-2 gap-4">
+            <MiniStat label="Interno" value={data.interno} />
+            <MiniStat label="Modalidad" value={data.tipoDeVenta || 'No definida'} />
+            <MiniStat label="Color" value={data.color || 'No informado'} />
+            <MiniStat
+              label={shouldShowDate ? 'Entrega' : 'Agenda'}
+              value={shouldShowDate ? `${data.fecha || '--'}${data.hora ? ` - ${data.hora}` : ''}` : 'Pendiente'}
+            />
+          </div>
+        </div>
+
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -191,15 +213,6 @@ export function VehicleCard({ data }: VehicleCardProps) {
           </div>
         </motion.div>
 
-        <div className="glass-panel p-8 md:p-10 flex items-center justify-between hover:bg-white/10 cursor-pointer group rounded-[2rem] md:rounded-[3rem]">
-          <div className="space-y-2">
-             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">ID de Sistema</span>
-             <p className="text-xl md:text-2xl font-black text-white tracking-tighter">{data.interno}</p>
-          </div>
-          <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center group-hover:border-blue-500 transition-all">
-            <Shield className="w-6 h-6 md:w-7 md:h-7 text-white/20 group-hover:text-blue-500 transition-colors" />
-          </div>
-        </div>
       </div>
     </div>
   );
@@ -284,24 +297,12 @@ function ContactItem({ icon, label, value }: { icon: React.ReactNode, label: str
   );
 }
 
-function ActionTile({ icon, title, desc, onClick, variant = 'slate' }: { icon: React.ReactNode, title: string, desc: string, onClick?: () => void, variant?: 'slate' | 'emerald' }) {
+function MiniStat({ label, value }: { label: string, value: string }) {
   return (
-    <button 
-      onClick={onClick}
-      className={`luxury-card p-6 md:p-8 flex items-center gap-5 hover:shadow-xl transition-all text-left w-full group ${
-        variant === 'emerald' ? 'bg-emerald-600/10 border-emerald-600/20' : ''
-      }`}
-    >
-       <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all ${
-         variant === 'emerald' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-600/20' : 'bg-white/5 text-slate-400 group-hover:bg-blue-600 group-hover:text-white group-hover:shadow-lg group-hover:shadow-blue-600/20'
-       }`}>
-          {icon}
-       </div>
-       <div>
-          <h4 className="text-sm font-black text-white uppercase tracking-widest">{title}</h4>
-          <p className="text-xs font-bold text-slate-500 uppercase tracking-tighter mt-1">{desc}</p>
-       </div>
-    </button>
+    <div className="rounded-[1.6rem] border border-white/6 bg-white/5 p-4 md:p-5">
+      <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-500">{label}</span>
+      <p className="mt-2 text-sm md:text-base font-bold text-white leading-tight">{value}</p>
+    </div>
   );
 }
 
@@ -321,11 +322,3 @@ function CarIcon({ className }: { className: string }) {
   );
 }
 
-function FingerprintIcon({ className }: { className: string }) {
-  return (
-    <svg className={className} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-      <path d="M2 12c0-4.418 3.582-8 8-8s8 3.582 8 8M5 12c0-2.761 2.239-5 5-5s5 2.239 5 5M8 12c0-1.105.895-2 2-2s2 .895 2 2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M12 12c0 1.105-.895 2-2 2s-2-.895-2-2M15 12c0 2.761-2.239 5-5 5s-5-2.239-5-5M18 12c0 4.418-3.582 8-8 8s-8-3.582-8-8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
