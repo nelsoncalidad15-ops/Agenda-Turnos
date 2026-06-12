@@ -130,7 +130,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
            <InfoPanel 
              icon={<User className="w-6 h-6 md:w-7 md:h-7 text-blue-500" />}
              title="Consultoría de Venta"
@@ -145,14 +145,15 @@ export function VehicleCard({ data }: VehicleCardProps) {
              value={data.entregaUsado || 'No declarada'}
              sub="Información sujeta a verificación de peritaje"
            />
-           <InfoPanel 
-             icon={<Sparkles className="w-6 h-6 md:w-7 md:h-7 text-amber-400" />}
-             title="Accesorios"
-             label="Equipamiento"
-             value={accessoryValue}
-             sub={accessorySub}
-           />
         </div>
+
+        <InfoPanel 
+          icon={<Sparkles className="w-6 h-6 md:w-7 md:h-7 text-amber-400" />}
+          title="Accesorios"
+          label="Equipamiento"
+          value={accessoryValue}
+          sub={accessorySub}
+        />
       </div>
 
       {/* RIGHT: OWNER & AGENT DETAILS */}
