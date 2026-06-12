@@ -185,13 +185,13 @@ export function VehicleCard({ data }: VehicleCardProps) {
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="glass-panel rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-10 text-white shadow-2xl relative overflow-hidden group min-h-[420px] flex flex-col justify-between border border-white/5"
+          className="glass-panel rounded-[2.5rem] md:rounded-[3.5rem] p-8 md:p-10 text-white shadow-2xl relative overflow-hidden group border border-white/5"
         >
           <div className="absolute top-0 right-0 p-12 opacity-[0.03] pointer-events-none group-hover:scale-110 transition-transform duration-1000">
              <User className="w-64 h-64" />
           </div>
           
-          <div className="relative z-10 space-y-8 md:space-y-10">
+          <div className="relative z-10 space-y-8">
             <header className="flex justify-between items-start">
                <div className="space-y-1">
                   <span className="text-[10px] font-black uppercase tracking-[0.5em] text-slate-500">Datos del Cliente</span>
@@ -208,7 +208,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
             </div>
           </div>
 
-          <div className="pt-8 md:pt-10 border-t border-white/5 space-y-4 md:space-y-5 relative z-10">
+          <div className="pt-6 md:pt-8 border-t border-white/5 space-y-4 md:space-y-5 relative z-10">
              <div className="flex items-center justify-between text-slate-500 text-[10px] font-black uppercase tracking-[0.3em]">
                 <span>Modalidad</span>
                 <span className="text-white bg-blue-600/10 border border-blue-600/20 px-3 py-1 rounded-full text-xs font-bold tracking-tight">{data.tipoDeVenta}</span>
