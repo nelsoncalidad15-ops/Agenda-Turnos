@@ -9,7 +9,7 @@ interface TimelineProps {
 const STEPS = [
   { id: 'Pendiente', label: 'Pendiente', icon: Clock },
   { id: 'Facturado', label: 'Facturado', icon: CheckCircle2 },
-  { id: 'Preturno', label: 'Preturno', icon: FileText },
+  { id: 'Preturno', label: 'Gestoria', icon: FileText },
   { id: 'Patentado', label: 'Patentado', icon: Package },
   { id: 'Turno', label: 'En Turno', icon: FileText },
   { id: 'En Proceso', label: 'Preparacion', icon: Package },

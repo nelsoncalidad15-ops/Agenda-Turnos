@@ -20,6 +20,11 @@ interface VehicleCardProps {
 
 const STAGES = ['Facturado', 'Preturno', 'Patentado', 'Turno'];
 
+function getStatusLabel(status?: string) {
+  if (status === 'Preturno') return 'Gestoria';
+  return status || 'Pendiente';
+}
+
 export function VehicleCard({ data }: VehicleCardProps) {
   const currentStageIndex = STAGES.indexOf(data.estado as string);
   const accessoryValue = data.accesorios || data.cargoAccesorios || 'Sin accesorios informados';
@@ -38,6 +43,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
   };
 
   const shouldShowDate = data.estado === 'Turno';
+  const displayStatus = getStatusLabel(data.estado);
 
   return (
     <div className="grid grid-cols-12 gap-4 md:gap-6 print:block">
@@ -105,7 +111,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
             <div className="flex justify-between items-end">
               <div className="space-y-2">
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Ultimo Estado</span>
-                <p className="text-3xl md:text-4xl font-black text-white tracking-tighter">{data.estado}</p>
+                <p className="text-3xl md:text-4xl font-black text-white tracking-tighter">{displayStatus}</p>
               </div>
               <div className="text-right">
                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Eficiencia</span>
@@ -145,7 +151,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
             {STAGES.map((step, i) => (
               <TimelineStep
                 key={step}
-                label={step}
+                label={getStatusLabel(step)}
                 active={currentStageIndex >= i}
                 isCurrent={currentStageIndex === i}
                 index={i + 1}
@@ -188,7 +194,7 @@ export function VehicleCard({ data }: VehicleCardProps) {
           />
           <InfoPanel
             icon={<Truck className="w-6 h-6 md:w-7 md:h-7 text-emerald-500" />}
-            title="Logistica Comercial"
+            title="Llave x llave"
             label="Entrega de Usado"
             value={data.entregaUsado || 'No declarada'}
             sub="Dato operativo a confirmar antes del cierre de entrega"
