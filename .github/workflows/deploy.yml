@@ -30,6 +30,9 @@ jobs:
         run: npm install
 
       - name: Build
+        env:
+          VITE_API_URL: https://agenda-turnos-5fm2.onrender.com/api
+          VITE_BASE_PATH: /Agenda-Turnos/
         run: npm run build
 
       - name: Upload artifact

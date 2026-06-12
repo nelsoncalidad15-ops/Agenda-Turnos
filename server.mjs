@@ -8,6 +8,10 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const port = Number(process.env.PORT || 3001);
 const distDir = path.join(__dirname, 'dist');
+const allowedOrigins = new Set([
+  'https://nelsoncalidad15-ops.github.io',
+  'http://localhost:3000',
+]);
 
 const CACHE_TTL_MS = Number(process.env.SHEET_CACHE_TTL_MS || 60000);
 const cache = {
@@ -43,6 +47,23 @@ async function getVehicles() {
 }
 
 app.use(express.json());
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+
+  if (origin && allowedOrigins.has(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(204);
+  }
+
+  return next();
+});
 
 app.get('/health', (_req, res) => {
   res.json({ ok: true });

@@ -36,3 +36,8 @@ Vite hace proxy de `/api` a `http://localhost:3001`, asi que no necesitas expone
 5. Despliega
 
 El backend sirve el `dist/` del frontend y tambien responde la API desde el mismo dominio.
+
+## Frontend en GitHub Pages + backend en Render
+- GitHub Pages publica el frontend en `https://nelsoncalidad15-ops.github.io/Agenda-Turnos/`
+- El workflow de GitHub Actions compila con `VITE_API_URL=https://agenda-turnos-5fm2.onrender.com/api`
+- Render sigue siendo solo la API privada que consulta Google Sheets
