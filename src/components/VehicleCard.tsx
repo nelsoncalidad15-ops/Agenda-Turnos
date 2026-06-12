@@ -72,6 +72,11 @@ export function VehicleCard({ data }: VehicleCardProps) {
               </div>
             </div>
 
+            <div className="space-y-2">
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Cliente</span>
+              <p className="text-2xl md:text-3xl font-black text-white tracking-tight">{data.cliente}</p>
+            </div>
+
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-[-0.04em] leading-[0.9]">
               {data.modelo?.split(' ')[0]}{' '}
               <span className="text-blue-500 italic">{data.modelo?.split(' ').slice(1, 3).join(' ')}</span>
@@ -79,6 +84,13 @@ export function VehicleCard({ data }: VehicleCardProps) {
                 {data.modelo?.split(' ').slice(3).join(' ')}
               </span>
             </h2>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-2">
+              <QuickHeroStat label="Estado" value={data.estado} />
+              <QuickHeroStat label="Fecha" value={agendaDateValue} />
+              <QuickHeroStat label="Hora" value={agendaHourValue} />
+              <QuickHeroStat label="Vendedor" value={advisorValue} />
+            </div>
 
             <div className="flex flex-wrap gap-8 md:gap-12 pt-2">
               <HeroStat
@@ -132,10 +144,10 @@ export function VehicleCard({ data }: VehicleCardProps) {
         <div className="glass-panel p-6 md:p-10 rounded-[2rem] md:rounded-[3.5rem]">
           <div className="flex justify-between items-start gap-6 mb-8 md:mb-10">
             <div className="space-y-2">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Agenda de Entrega</span>
-              <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight">{data.cliente}</h3>
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-500">Proxima Gestion</span>
+              <h3 className="text-2xl md:text-3xl font-black text-white tracking-tight">Resumen de Coordinacion</h3>
               <p className="text-sm md:text-base text-slate-400 font-medium">
-                Vista pensada para informar al cliente y seguir el avance de la unidad.
+                Todo lo clave para confirmar turno, contacto y estado sin ir a los datos tecnicos.
               </p>
             </div>
             <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl border border-white/10 flex items-center justify-center shrink-0">
@@ -144,12 +156,12 @@ export function VehicleCard({ data }: VehicleCardProps) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <MiniStat label="Estado Actual" value={data.estado} />
-            <MiniStat label="Fecha" value={agendaDateValue} />
-            <MiniStat label="Hora" value={agendaHourValue} />
-            <MiniStat label="Vendedor" value={advisorValue} />
             <MiniStat label="Ubicacion" value={locationValue} />
+            <MiniStat label="Telefono" value={data.telefono || 'No disponible'} />
+            <MiniStat label="Email" value={data.mail || 'No disponible'} />
+            <MiniStat label="Tipo de Cliente" value={customerTypeValue} />
             <MiniStat label="Tipo de Venta" value={data.tipoDeVenta || 'No definida'} />
+            <MiniStat label="Dominio" value={data.dominio || 'Sin dominio'} />
           </div>
         </div>
 
@@ -278,6 +290,15 @@ function HeroStat({ label, value, isMono, icon }: { label: string; value: string
         <span className="text-[10px] font-black uppercase tracking-widest">{label}</span>
       </div>
       <p className={`text-lg md:text-xl font-bold text-white tracking-tight ${isMono ? 'font-mono uppercase text-sm' : ''}`}>{value}</p>
+    </div>
+  );
+}
+
+function QuickHeroStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-[1.4rem] border border-white/8 bg-white/5 px-4 py-3">
+      <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-500">{label}</span>
+      <p className="mt-2 text-sm md:text-base font-black text-white leading-tight">{value}</p>
     </div>
   );
 }
