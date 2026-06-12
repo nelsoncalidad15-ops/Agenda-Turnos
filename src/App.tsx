@@ -115,9 +115,9 @@ export default function App() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0 }}
-              className="w-full space-y-4 md:space-y-6"
+              className="w-full -mt-2 md:-mt-3 space-y-3 md:space-y-4"
             >
-              <div className="flex items-center pt-2">
+              <div className="flex items-center">
                 <button 
                   onClick={switchToClient}
                   className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/10 flex items-center justify-center hover:bg-white hover:text-slate-900 transition-all group"
